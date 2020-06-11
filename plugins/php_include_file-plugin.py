@@ -10,37 +10,37 @@ vararr=['$_GET','$_POST','$_REQUEST','$_SERVER']
 Whiterule = ['.php','$','templates','.html']
 
 def  judgeBackdoor(fileCtent):
-	if 'include' in fileCtent or 'require' in fileCtent:
-		result = re.compile(rule1).findall(fileCtent)
-		if len(result) > 0:
-			resultlist = []
-			for key in result:
-				isok = 1
-				for Whitestr in Whiterule:
-					if Whitestr in key[4].lower():
-						isok = 0
-				if isok == 1:
-					resultlist.append(key)
-			if len(resultlist) > 0:
-				return 'include|require(_once)非法引用后门'
+    if 'include' in fileCtent or 'require' in fileCtent:
+        result = re.compile(rule1).findall(fileCtent)
+        if len(result) > 0:
+            resultlist = []
+            for key in result:
+                isok = 1
+                for Whitestr in Whiterule:
+                    if Whitestr in key[4].lower():
+                        isok = 0
+                if isok == 1:
+                    resultlist.append(key)
+            if len(resultlist) > 0:
+                return 'include|require(_once)非法引用后门'
 
-		result = re.compile(rule2).findall(fileCtent)
-		if len(result) > 0:
-			varlist = ''
-			for group in result:
-				if group[4] in varlist:
-					continue
-				else:
-					varlist += group[4] + '--'
-				for var in vararr:
-					if var in group[4]:
-						return 'include|require(_once)非法引用动态参数后门'
-				resultson = re.search('\\'+group[4]+rule3,fileCtent)
-				try:
-					if len(resultson.groups()) > 0:
-						return 'include|require(_once)非法引用动态参数后门'
-				except:
-					continue
-		return None
-	else:
-		return None
+        result = re.compile(rule2).findall(fileCtent)
+        if len(result) > 0:
+            varlist = ''
+            for group in result:
+                if group[4] in varlist:
+                    continue
+                else:
+                    varlist += group[4] + '--'
+                for var in vararr:
+                    if var in group[4]:
+                        return 'include|require(_once)非法引用动态参数后门'
+                resultson = re.search('\\'+group[4]+rule3,fileCtent)
+                try:
+                    if len(resultson.groups()) > 0:
+                        return 'include|require(_once)非法引用动态参数后门'
+                except:
+                    continue
+        return None
+    else:
+        return None

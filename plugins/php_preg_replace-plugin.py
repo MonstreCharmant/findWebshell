@@ -9,9 +9,9 @@ backdoorType = "preg_replace后门"
 
 #判断是否存在后门函数
 def  judgeBackdoor(fileCtent):
-	if keyword in fileCtent:
-		result = re.compile(rule).findall(fileCtent)
-		if len(result) > 0:
-			return  backdoorType
-	else:
-		return None
+    if keyword in fileCtent:
+        result = re.compile(rule).findall(fileCtent)
+        if len(result) > 0:
+            return  backdoorType
+    else:
+        return None

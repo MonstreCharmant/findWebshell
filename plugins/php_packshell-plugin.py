@@ -9,16 +9,16 @@ rule='gzdeflate|gzcompress|gzencode'
 whitefilter=[]
 
 def  judgeBackdoor(fileCtent):
-	result = re.search(rule, fileCtent)
-	try:
-		if result.group():
-			if '打包' in fileCtent and 'unix2DosTime' in fileCtent:
-				isok = 1
-				for white in whitefilter:
-					if white[0][0] in filepath.replace('\\', '/') and white[1][0] in key:
-						isok = 0
-				if isok:
-					return 'PHP 文件打包后门程序'
-	except:
-		pass
-	return None
+    result = re.search(rule, fileCtent)
+    try:
+        if result.group():
+            if '打包' in fileCtent and 'unix2DosTime' in fileCtent:
+                isok = 1
+                for white in whitefilter:
+                    if white[0][0] in filepath.replace('\\', '/') and white[1][0] in key:
+                        isok = 0
+                if isok:
+                    return 'PHP 文件打包后门程序'
+    except:
+        pass
+    return None

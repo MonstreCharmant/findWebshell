@@ -9,21 +9,21 @@ rule2='\s{0,10}=\s{0,10}([{@]{0,2}\\\\{0,1}\$_(GET|POST|REQUEST)|file_get_conten
 vararr=['$_GET','$_POST','$_REQUEST','$_SESSION','$_SERVER']
 
 def  judgeBackdoor(fileCtent):
-	if 'eval' in fileCtent or 'assert' in fileCtent:
-		result = re.compile(rule).findall(fileCtent)
-		if len(result) > 0:
-			for group in result:
-				for var in vararr:
-					if var in group[2]:
-						return "eval|assert后门"
-				resultson = re.search('\\' + group[2] + rule2, fileCtent)
-				try:
-					if len(resultson.groups()) > 0:
-						return "eval|assert($a)动态eval|assert后门"
-				except:
-					continue
-		else:
-			result = re.compile(rule1).findall(fileCtent)
-			if len(result) > 0:
-				return "eval|assert(base64)加密后门"
-	return None
+    if 'eval' in fileCtent or 'assert' in fileCtent:
+        result = re.compile(rule).findall(fileCtent)
+        if len(result) > 0:
+            for group in result:
+                for var in vararr:
+                    if var in group[2]:
+                        return "eval|assert后门"
+                resultson = re.search('\\' + group[2] + rule2, fileCtent)
+                try:
+                    if len(resultson.groups()) > 0:
+                        return "eval|assert($a)动态eval|assert后门"
+                except:
+                    continue
+        else:
+            result = re.compile(rule1).findall(fileCtent)
+            if len(result) > 0:
+                return "eval|assert(base64)加密后门"
+    return None
